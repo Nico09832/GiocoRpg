@@ -39,3 +39,41 @@ const mostri = [crilin, gokuSS, vegetaSS];
 const mostro = mostri[Math.floor(Math.random() * mostri.length)];
 
 
+function turnoGiocatore(giocatore, mostro) {
+    console.log("\n" + giocatore.nome + " vs " + mostro.nome);
+    console.log("Vita giocatore: " + giocatore.vita + ", Vita mostro: " + mostro.vita);
+    const azione = prompt("Scegli un'azione (attacco, cura, fuga): ").toLowerCase();
+    
+    if (azione === "attacco") {
+        let danno = Math.floor(Math.random() * giocatore.attacco);
+        danno = Math.max(danno - mostro.difesa, 1);
+        mostro.vita -= danno;
+        console.log("Hai inflitto " + danno + " danni al " + mostro.nome + ".");
+    } else if (azione === "cura") {
+        if (giocatore.cure > 0) {
+            let cura = Math.floor(Math.random()*30);
+            giocatore.vita += cura;
+            giocatore.cure -= 1;
+            console.log("Ti sei curato di " + cura + " punti.")
+        } else {
+            console.log("Non hai più cure!");
+        }
+    } else if (azione === "fuga") {
+        let probabilitàFuga = Math.floor(Math.random()*100);
+        if (probabilitàFuga <= mostro.fuga) {
+            console.log("Sei fuggito!");
+            return true;
+        } else {
+            console.log("Sei stato preso!");
+        }
+    }
+
+    return false;
+}
+
+function turnoMostro(giocatore, mostro) {
+    let danno = Math.floor(Math.random() * mostro.attacco);
+    danno = Math.max(danno - giocatore.difesa, 5);
+    giocatore.vita -= danno;
+    console.log(mostro.nome + " ti ha inflitto " + danno + " danni.");
+}
