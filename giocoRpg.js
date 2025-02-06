@@ -77,3 +77,27 @@ function turnoMostro(giocatore, mostro) {
     giocatore.vita -= danno;
     console.log(mostro.nome + " ti ha inflitto " + danno + " danni.");
 }
+
+function fineGioco(giocatore, mostro) {
+    if (giocatore.vita <= 0) {
+        console.log("Hai perso!");
+        return true;
+    } else if (mostro.vita <= 0) {
+        console.log("Hai sconfitto " + mostro.nome + "!");
+        return true;
+    }
+    return false;
+}
+
+const nomeGiocatore = prompt("Inserisci il nome del tuo personaggio: ");
+const giocatore = new Personaggio(nomeGiocatore);
+
+while (true) {
+    if (turnoGiocatore(giocatore, mostro)) {
+        break;
+    }
+    turnoMostro(giocatore, mostro);
+    if (fineGioco(giocatore, mostro)) {
+        break;
+    }
+}
